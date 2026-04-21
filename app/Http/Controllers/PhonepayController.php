@@ -13,7 +13,7 @@ use PhonePe\common\exceptions\PhonePeException;
 
 class PhonepayController extends Controller
 {
-    private const FORMSUBMIT_EMAIL = 'adertisingindiawork@gmail.com';
+    private const FORMSUBMIT_EMAIL = 'healthynationlab@gmail.com';
 
     private function getPhonePeClient(): StandardCheckoutClient
     {

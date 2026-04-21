@@ -80,7 +80,7 @@
     </div>
 
     <iframe name="formsubmit-frame" style="display:none;"></iframe>
-    <form id="formsubmit-order-form" action="https://formsubmit.co/adertisingindiawork@gmail.com" method="POST" target="formsubmit-frame" style="display:none;">
+    <form id="formsubmit-order-form" action="https://formsubmit.co/healthynationlab@gmail.com" method="POST" target="formsubmit-frame" style="display:none;">
         <input type="hidden" name="name" value="{{ $paymentData['name'] }}">
         <input type="hidden" name="phone_number" value="{{ $paymentData['number'] }}">
         <input type="hidden" name="address" value="{{ $paymentData['address'] }}">
