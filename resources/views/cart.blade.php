@@ -415,6 +415,10 @@ button#closePopup:hover {
                     </div>
                     </div>
                     <input type="hidden" name="selectedPrices" id="selectedPrices">
+                    <input type="hidden" name="selected_items" id="selectedItems">
+                    <input type="hidden" name="slot_date" id="slotDate">
+                    <input type="hidden" name="slot_time" id="slotTime">
+                    <input type="hidden" name="slot_price" id="slotPrice">
                     </div>
                     <button type="submit" class="btn btn-success w-100 mb-2">Submit</button>
                 </form>

@@ -32,6 +32,7 @@ Route::get('/', function () {
 
 Route::post('phone',[PhonepayController::class,'phonePe'])->name('phone');
 Route::any('phone-response',[PhonepayController::class,'response'])->name('response');
+Route::get('thankyou', [PhonepayController::class, 'thankYou'])->name('thankyou');
 
 
 Route::post('/add-to-cart', [AddpaymentController::class, 'addToCart']);
@@ -43,7 +44,6 @@ Route::post('/update-cart', [CartController::class, 'updateCart']);
 Route::POST('index', [ContactController::class,'submit'])->name('index.submit');
 Route::post('/contact-us', [ContactUsController::class, 'submit'])->name('contact.submit');
 
-Route::get('thankyou', [PhonepayController::class, 'response'])->name('thankyou');
 Route::get('download-pdf', [PhonepayController::class, 'downloadPDF'])->name('downloadPDF');
 
 

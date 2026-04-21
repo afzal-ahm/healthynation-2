@@ -138,10 +138,82 @@ function removeItemFromCart(index) {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
     
     displayCartItems();
+    syncOrderFormData();
+}
+
+function buildSelectedItemsText() {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    if (!cartItems.length) {
+        return '';
+    }
+
+    return cartItems
+        .map((item, index) => `${index + 1}. ${item.name} - Rs ${item.price}`)
+        .join('\n');
+}
+
+function renderConfirmCartItems() {
+    const confirmTableBody = document.querySelector('#cart-items-confirm');
+
+    if (!confirmTableBody) {
+        return;
+    }
+
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    confirmTableBody.innerHTML = '';
+
+    if (!cartItems.length) {
+        confirmTableBody.innerHTML = '<tr><td colspan="2">Your cart is empty.</td></tr>';
+        return;
+    }
+
+    const headerRow = document.createElement('tr');
+    headerRow.innerHTML = `
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;background:#1A4625;color:#fff;">Item Name</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;background:#1A4625;color:#fff;">Price</th>
+    `;
+    confirmTableBody.appendChild(headerRow);
+
+    cartItems.forEach((item) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td style="border: 1px solid #ddd; padding: 8px; font-weight:600;color:#fff;background:#1A4625;">${item.name}</td>
+            <td style="border: 1px solid #ddd; padding: 8px; font-weight:600;color:#fff;background:#1A4625;">Rs ${item.price}</td>
+        `;
+        confirmTableBody.appendChild(row);
+    });
+}
+
+function syncOrderFormData() {
+    const selectedItemsField = document.getElementById('selectedItems');
+    const slotDateField = document.getElementById('slotDate');
+    const slotTimeField = document.getElementById('slotTime');
+    const slotPriceField = document.getElementById('slotPrice');
+
+    if (selectedItemsField) {
+        selectedItemsField.value = buildSelectedItemsText();
+    }
+
+    if (slotDateField) {
+        slotDateField.value = document.getElementById('calendar-input')?.value || '';
+    }
+
+    const selectedSlot = document.querySelector('input[name="slot_time"]:checked');
+
+    if (slotTimeField) {
+        slotTimeField.value = selectedSlot ? selectedSlot.getAttribute('data-time') : '';
+    }
+
+    if (slotPriceField) {
+        slotPriceField.value = selectedSlot ? selectedSlot.getAttribute('data-price') : '';
+    }
 }
 
 // Call this function to display cart items when the page loads
 displayCartItems();
+renderConfirmCartItems();
+syncOrderFormData();
 
 
 
@@ -231,6 +303,8 @@ displayCartItems();
    
     $('#continueBtn2').click(function (e) {
         e.preventDefault(); // Prevent form submission
+        renderConfirmCartItems();
+        syncOrderFormData();
         // Open the modal to confirm
         $('#confirmationModal').modal('show');
         $('#exampleModal').modal('hide');
@@ -245,39 +319,6 @@ displayCartItems();
 });
 
 
-const cartItems = document.querySelectorAll('#cart-items-container tr');
-const confirmTableBody = document.querySelector('#cart-items-confirm');
-
-cartItems.forEach(item => {
-    // Clone the row and remove the remove button
-    const clonedRow = item.cloneNode(true);
-    
-    // Find and remove the "remove" button (or action column if it exists)
-    const removeButton = clonedRow.querySelector('.remove-btn'); // Or use the class/id for action button
-    if (removeButton) {
-        removeButton.closest('td').remove(); // Remove the td which contains the remove button
-    }
-    
-    // Append the cloned row to the confirm table
-    confirmTableBody.appendChild(clonedRow);
-});
-
-const tableRows = document.querySelectorAll('#cart-items-confirm tr');
-const headerRow = document.querySelector('#cart-items-confirm tr');
-const lastTh = headerRow ? headerRow.querySelector('th:last-child') : null;
-if (lastTh) {
-    lastTh.remove();
-}
-
-// Loop through each row and remove the last column (action column) and other last children
-tableRows.forEach(row => {
-    // Remove the last column in the row (action column)
-    const lastChild = row.querySelector('td:last-child');  // Select the last td (cell) in the row
-    if (lastChild) {
-        lastChild.remove();  // Remove the last child
-    }
-});
-
 // Get all radio buttons with name 'slot_time'
 const radioButtons = document.querySelectorAll('input[name="slot_time"]');
 
@@ -290,13 +331,14 @@ radioButtons.forEach(button => {
             // Get the selected slot time and price
             const selectedTime = this.getAttribute('data-time');
             const selectedPrice = this.getAttribute('data-price');
+            const selectedDate = document.getElementById('calendar-input')?.value || '';
             
             // Update the confirm-test div with the selected slot time and price
            confirmTestDiv.innerHTML = `
     <table style="width: 100%; border-collapse: collapse; background-color: #f4f4f4;">
         <tr>
             <td style="background-color: blue; color: white; padding: 8px; font-weight: bold; text-align: center;">
-                Selected Slot: ${selectedTime}
+                Selected Slot: ${selectedDate} | ${selectedTime}
             </td>
             <td style="background-color: blue; color: white; padding: 8px; font-weight: bold; text-align: center;">
                 ₹ ${selectedPrice}
@@ -304,6 +346,7 @@ radioButtons.forEach(button => {
         </tr>
     </table>
 `;
+            syncOrderFormData();
         }
     });
 });
@@ -344,9 +387,11 @@ function calculateTotal() {
 
     // Update the hidden field with the total price (this will be sent to the backend)
     document.getElementById('selectedPrices').value = totalAmount;
+    document.getElementById('totalAmountCell').textContent = `Rs ${totalAmount}`;
 
     // Optionally, you can still log the total to the console for debugging purposes
     // console.log('Total Amount:', totalAmount);
+    syncOrderFormData();
 }
 
 // Add event listener to radio buttons for slot time selection
@@ -356,6 +401,14 @@ document.querySelectorAll('input[name="slot_time"]').forEach(button => {
 
 // Add event listener to the print report checkbox
 document.getElementById('print_report').addEventListener('change', calculateTotal);
+document.getElementById('calendar-input').addEventListener('change', function() {
+    syncOrderFormData();
+
+    const selectedSlot = document.querySelector('input[name="slot_time"]:checked');
+    if (selectedSlot) {
+        selectedSlot.dispatchEvent(new Event('change'));
+    }
+});
 
 // Call calculateTotal to initialize the total amount whenever the cart is displayed or updated
 calculateTotal();
@@ -365,6 +418,7 @@ calculateTotal();
  document.getElementById('slotForm').addEventListener('submit', function(event) {
         const paymentMethod = document.querySelector('input[name="payment_method"]:checked');
         const form = event.target;
+        const selectedSlot = document.querySelector('input[name="slot_time"]:checked');
 
         // Check if a payment method is selected
         if (!paymentMethod) {
@@ -372,6 +426,14 @@ calculateTotal();
             event.preventDefault();
             return;
         }
+
+        if (!selectedSlot) {
+            alert('Please select a slot date and time.');
+            event.preventDefault();
+            return;
+        }
+
+        syncOrderFormData();
 
         if (paymentMethod.value === 'COD') {
             // Redirect to the index page if COD is selected

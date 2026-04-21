@@ -42,6 +42,22 @@
             <td>{{ $paymentData['payment_method'] }}</td>
         </tr>
         <tr>
+            <th>Items</th>
+            <td style="white-space: pre-line;">{{ $paymentData['selected_items'] ?? 'N/A' }}</td>
+        </tr>
+        <tr>
+            <th>Slot Date</th>
+            <td>{{ $paymentData['slot_date'] ?? 'N/A' }}</td>
+        </tr>
+        <tr>
+            <th>Slot Time</th>
+            <td>{{ $paymentData['slot_time'] ?? 'N/A' }}</td>
+        </tr>
+        <tr>
+            <th>Slot Price</th>
+            <td>{{ $paymentData['slot_price'] ?? 'N/A' }}</td>
+        </tr>
+        <tr>
             <th>Selected Price</th>
             <td>{{ $paymentData['selectedPrices'] }}</td>
         </tr>

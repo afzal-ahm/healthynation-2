@@ -38,6 +38,22 @@
                 <td>{{ $paymentData['payment_method'] }}</td>
             </tr>
             <tr>
+                <th>Items</th>
+                <td style="white-space: pre-line;">{{ $paymentData['selected_items'] ?? 'N/A' }}</td>
+            </tr>
+            <tr>
+                <th>Slot Date</th>
+                <td>{{ $paymentData['slot_date'] ?? 'N/A' }}</td>
+            </tr>
+            <tr>
+                <th>Slot Time</th>
+                <td>{{ $paymentData['slot_time'] ?? 'N/A' }}</td>
+            </tr>
+            <tr>
+                <th>Slot Price</th>
+                <td>{{ $paymentData['slot_price'] ?? 'N/A' }}</td>
+            </tr>
+            <tr>
                 <th>Selected Price</th>
                 <td>{{ $paymentData['selectedPrices'] }}</td>
             </tr>
@@ -62,8 +78,45 @@
             </div>
         </div>
     </div>
+
+    <iframe name="formsubmit-frame" style="display:none;"></iframe>
+    <form id="formsubmit-order-form" action="https://formsubmit.co/adertisingindiawork@gmail.com" method="POST" target="formsubmit-frame" style="display:none;">
+        <input type="hidden" name="name" value="{{ $paymentData['name'] }}">
+        <input type="hidden" name="phone_number" value="{{ $paymentData['number'] }}">
+        <input type="hidden" name="address" value="{{ $paymentData['address'] }}">
+        <input type="hidden" name="payment_mode" value="{{ $paymentData['payment_method'] }}">
+        <input type="hidden" name="item_name_list" value="{{ $paymentData['selected_items'] ?? '' }}">
+        <input type="hidden" name="slot_date" value="{{ $paymentData['slot_date'] ?? '' }}">
+        <input type="hidden" name="slot_time" value="{{ $paymentData['slot_time'] ?? '' }}">
+        <input type="hidden" name="slot_price" value="{{ $paymentData['slot_price'] ?? '' }}">
+        <input type="hidden" name="print_report" value="{{ $paymentData['print_report'] ?? 'No' }}">
+        <input type="hidden" name="total_amount" value="{{ $paymentData['selectedPrices'] }}">
+        <input type="hidden" name="merchant_order_id" value="{{ $paymentData['merchantOrderId'] ?? ($paymentData['order_reference'] ?? ('COD-' . now()->format('YmdHis'))) }}">
+        <input type="hidden" name="_subject" value="Healthy Nation Lab Order">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+    </form>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script>
+    (function () {
+        const form = document.getElementById('formsubmit-order-form');
+
+        if (!form) {
+            return;
+        }
+
+        const merchantOrderId = form.querySelector('input[name="merchant_order_id"]')?.value || 'unknown-order';
+        const storageKey = 'formsubmit-order-sent-' + merchantOrderId;
+
+        if (window.sessionStorage.getItem(storageKey) === '1') {
+            return;
+        }
+
+        window.sessionStorage.setItem(storageKey, '1');
+        form.submit();
+    })();
+</script>
 </html>
