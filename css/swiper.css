@@ -1,0 +1,71 @@
+/* #product-slider{
+    box-shadow: 0 -1px 10px 1px grey;
+    margin: 0;
+} */
+
+#product-slider .swiper-wrapper{
+    padding: 40px 10px;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide .icon-product{
+    /* /* background-color: #1ae8076c; */
+    padding: 10px;
+    height: 60px;
+    width: 60px;
+    align-items: center;
+    justify-content: center; */
+}
+
+.swiper-slide {
+  appearance: none;
+  background-color: #FFFFFF;
+  border-radius: 40em;
+  border-style: none;
+  box-shadow: #11a4c1 0 -12px 6px inset;
+  box-sizing: border-box;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,sans-serif;
+  font-weight: 700;
+  letter-spacing: -.4px;
+  margin: 0;
+  outline: none;
+  quotes: auto;
+  text-align: center;
+  text-decoration: none;
+  transition: all .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  height: 80px;
+  width: 80px;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide:hover{
+    box-shadow: 0 -2px 8px 2px rgb(170, 170, 170);
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+    font-size: 22px;
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: 0.3s all ease-in;
+
+}
+
+.swiper img:hover {
+    transform: scale(1.15);
+}

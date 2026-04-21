@@ -1,0 +1,16 @@
+[26-Dec-2025 05:05:40 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home2/healthynationlab/public_html/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home2/healthynationlab/public_html/config/database.php on line 18
+[26-Dec-2025 05:05:41 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home2/healthynationlab/public_html/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home2/healthynationlab/public_html/config/mail.php on line 16
+[26-Dec-2025 05:05:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home2/healthynationlab/public_html/config/app.php:18
+Stack trace:
+#0 {main}
+  thrown in /home2/healthynationlab/public_html/config/app.php on line 18
+[26-Dec-2025 05:05:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home2/healthynationlab/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home2/healthynationlab/public_html/config/services.php on line 18

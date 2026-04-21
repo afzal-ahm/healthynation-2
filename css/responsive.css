@@ -1,0 +1,75 @@
+@media screen and (max-width: 480px) {
+    .box-feature{
+       margin-bottom:20px;
+ }
+
+ .swiper-slide{
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+    width: 150px;
+    height: auto;
+    cursor: pointer;
+    overflow: hidden;
+    transition: 0.3s all ease-in-out;
+ }
+}
+
+@media screen and (max-width:480px){
+    .box-test{
+        display: flex !important;
+        flex-direction: column !important;
+        margin-top: 800px !important;
+        justify-content: center !important;
+        align-items: center;
+        
+    }
+    .toggale-button{
+        margin-top: 170px !important;
+        position: absolute;
+    }
+    .gold-test{
+        margin-top:5px!important;
+         margin-bottom:5px!important;
+    }
+}
+
+@media screen and (max-width:412px){
+    .box-test{
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center;
+    }
+    .toggale-button{
+        margin-top: 170px !important;
+        position: absolute;
+    }
+    .gold-test{
+        margin-top:5px!important;
+         margin-bottom:5px!important;
+        width: 350px !important;
+    }
+    .test-description{
+        width:auto;
+    }
+    .button-73{
+        padding:5px;
+    }
+    .secont-header{
+        height:120px;
+    }
+    .top-header-banner{
+      margin-top: 85px !important;
+    }
+    #pincodeInput{
+        height:35px!important;
+    }
+    #searchInput{
+        height:35px!important;
+    }
+}
